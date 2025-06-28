@@ -37,7 +37,7 @@ def get_value_by_heading(selector, heading, letting_details=False):
     if letting_details:
         return selector.css(f'dt:contains("{heading}") + dd::text').get(default='').strip()
     else:
-        return selector.css(f'dl:contains("{heading}") dd::text').get(default='').strip()
+        return selector.css(f'dt:contains("{heading}") + dd p::text').get(default='').strip().replace('Ã—', '') or selector.css(f'dl:contains("{heading}") dd::text').get(default='').strip()
 
 
 # Function to get images from the response
@@ -295,8 +295,8 @@ def main(url):
                 'propertyData', {})
         except Exception as e:
             json_data = {}
-            error = f'Error parsing JSON data for URL {url}: {e} \n\n'
-            print(error)
+            # error = f'Error parsing JSON data for URL {url}: {e} \n\n'
+            # print(error)
 
         images, images_urls, floor_plan = get_images(selector)
 
